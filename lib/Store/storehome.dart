@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_shop/Store/cart.dart';
 import 'package:e_shop/Store/product_page.dart';
@@ -7,10 +9,13 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:e_shop/Config/config.dart';
+import '../Counters/cartitemcounter.dart';
 import '../Widgets/loadingWidget.dart';
+import '../Widgets/myDrawer.dart';
 import '../Widgets/myDrawer.dart';
 import '../Widgets/searchBox.dart';
 import '../Models/item.dart';
+import 'cart.dart';
 
 double width;
 
@@ -25,6 +30,62 @@ class _StoreHomeState extends State<StoreHome> {
     width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          flexibleSpace: Container(
+            decoration: new BoxDecoration(
+              gradient: new LinearGradient(
+                colors: [Colors.pink,Colors.purple],
+                begin: const FractionalOffset(0.0, 0.0),
+                end:  const FractionalOffset(1.0, 1.0),
+                stops: [0.0,1.0],
+                tileMode: TileMode.clamp,
+              ),
+              // color: Colors.deepOrange,
+            ),
+          ),
+          title: Text(
+            "My Shop",
+            style: TextStyle(fontSize: 55.0,color: Colors.white),
+          ),
+          centerTitle: true,
+          actions: [
+            Stack(
+              children: [
+                IconButton(
+                  icon: Icon(Icons.shopping_cart,color: Colors.white,),
+                  onPressed: ()
+                  {
+                    Route route = MaterialPageRoute(builder: (c) => CartPage());
+                    Navigator.pushReplacement(context, route);
+                  }, 
+                ),
+                Positioned(
+                  child: Stack(
+                    children: [
+                      Icon(
+                        Icons.brightness_1,
+                        size: 20.0,
+                        color: Colors.green,
+                      ),
+                      Positioned(
+                        top: 3.0,
+                        bottom: 4.0,
+                        child: Consumer<CartItemCounter>(
+                          builder: (context, counter,_)
+                          {
+                            return Text(
+                              counter.count.toString(),
+                              style: TextStyle(color: Colors.white, fontSize: 12.0, fontWeight: FontWeight.w500),
+                            );
+                          },
+                        ),)
+                    ],
+                  ))
+              ],
+            )
+          ],
+        ),
+        drawer: MyDrawer(),
       ),
     );
   }
