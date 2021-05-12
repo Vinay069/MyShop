@@ -7,6 +7,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import '../Admin/uploadItems.dart';
+import '../DialogBox/errorDialog.dart';
+import '../DialogBox/errorDialog.dart';
+import '../DialogBox/loadingDialog.dart';
 import '../Store/storehome.dart';
 import 'package:e_shop/Config/config.dart';
 
@@ -127,5 +131,85 @@ class _RegisterState extends State<Register> {
             );
           });
     }
+    else
+    {
+      _passwordTextEditingController.text == _cPasswordTextEditingController.text
+      ? _emailTextEditingController.text.isNotEmpty &&
+       _passwordTextEditingController.text.isNotEmpty && 
+       _cPasswordTextEditingController.text.isNotEmpty && 
+       _nameTextEditingController.text.isNotEmpty
+
+       ? uploadToStorage()
+
+       :displayDialog("Please fill up the registration complete form..")
+
+       :displayDialog("Password do not match");
+    }
   }
+
+  displayDialog(String msg)
+  {
+    showDialog(
+      context: context, 
+      builder: (c)
+      {
+        return ErrorAlertDialog(message: msg,);
+      });
+  }
+
+  uploadToStorage()async
+  {
+    showDialog(
+      context: context, 
+      builder: (c)
+      {
+        return LoadingAlertDialog(message: "Authentication, Please wait...",);
+      });
+    String imageFileName= DateTime.now().millisecondsSinceEpoch.toString();
+
+    StorageReference storageReference= FirebaseStorage.instance.ref().child(imageFileName);
+
+    StorageUploadTask storageUploadTask = storageReference.putFile(_imageFile);
+
+    StorageTaskSnapshot taskSnapshot = await storageUploadTask.onComplete;
+
+    await taskSnapshot.ref.getDownloadURL().then((urlImage){
+      userImageUrl = urlImage;
+
+      _registerUser();
+
+    });
+
+  }
+
+  FirebaseAuth _auth =FirebaseAuth.instance;
+  void _registerUser() async
+   {
+     FirebaseUser firebaseUser;
+     await _auth.createUserWithEmailAndPassword
+     (
+      email: _emailTextEditingController.text.trim(),
+      password: _passwordTextEditingController.text.trim(),
+      ).then((auth){
+        firebaseUser = auth.user;
+      }).catchError((error){
+        Navigator.pop(context);
+        showDialog(
+          context: context,
+          builder: (c)
+          {
+            return ErrorAlertDialog(message: error.message.toString(),);
+          }
+        )
+      });
+
+      if(firebaseUser !=null){
+        saveUserInfoToFireStore(firebaseUser);
+      }
+  }
+  Future saveUserInfoToFireStore(FirebaseUser fUser) async
+  {
+    Firestore.instance.collection()
+  }
+  
 }
