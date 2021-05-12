@@ -209,7 +209,7 @@ class _RegisterState extends State<Register> {
   }
   Future saveUserInfoToFireStore(FirebaseUser fUser) async
   {
-    Firestore.instance.collection()
+    Firestore.instance.collection()vinay
   }
   
 }
