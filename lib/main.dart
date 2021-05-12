@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Authentication/authenication.dart';
 import 'package:e_shop/Config/config.dart';
+import 'Config/config.dart';
+import 'Config/config.dart';
 import 'Counters/cartitemcounter.dart';
 import 'Counters/changeAddresss.dart';
 import 'Counters/totalMoney.dart';
@@ -17,6 +19,8 @@ Future<void> main() async
   WidgetsFlutterBinding.ensureInitialized();
 
   EcommerceApp.auth = FirebaseAuth.instance;
+  EcommerceApp.sharedPreferences=await SharedPreferences.getInstance();
+  EcommerceApp.firestore= Firestore.instance;
 
   runApp(MyApp());
 }

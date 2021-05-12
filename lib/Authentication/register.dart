@@ -1,4 +1,6 @@
+// import 'dart:html';
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_shop/Widgets/customTextField.dart';
 import 'package:e_shop/DialogBox/errorDialog.dart';
 import 'package:e_shop/DialogBox/loadingDialog.dart';
@@ -8,11 +10,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../Admin/uploadItems.dart';
-import '../DialogBox/errorDialog.dart';
+import '../Config/config.dart';
+import '../Config/config.dart';
+import '../Config/config.dart';
+import '../Config/config.dart';
+import '../Config/config.dart';
 import '../DialogBox/errorDialog.dart';
 import '../DialogBox/loadingDialog.dart';
 import '../Store/storehome.dart';
 import 'package:e_shop/Config/config.dart';
+
+import '../Store/storehome.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -200,16 +208,32 @@ class _RegisterState extends State<Register> {
           {
             return ErrorAlertDialog(message: error.message.toString(),);
           }
-        )
+        );
       });
 
-      if(firebaseUser !=null){
-        saveUserInfoToFireStore(firebaseUser);
+      if(firebaseUser !=null)
+      {
+        saveUserInfoToFireStore(firebaseUser).then((value){
+          Navigator.pop(context);
+          Route route= MaterialPageRoute(builder: (c) => StoreHome());
+          Navigator.pushReplacement(context, route);
+        });
+      
       }
-  }
-  Future saveUserInfoToFireStore(FirebaseUser fUser) async
-  {
-    Firestore.instance.collection()vinaykkkk
-  }
-  
+   }
+   Future saveUserInfoToFireStore(FirebaseUser fUser)async
+   {
+     Firestore.instance.collection("users").document(fUser.uid).setData({
+       "uid": fUser.uid,
+       "email": fUser.email,
+       "name": _nameTextEditingController.text.trim(),
+       "url": userImageUrl,
+     });
+
+     await EcommerceApp.sharedPreferences.setString("uid",fUser.uid);
+     await EcommerceApp.sharedPreferences.setString(EcommerceApp.userEmail,fUser.email);
+     await EcommerceApp.sharedPreferences.setString(EcommerceApp.userName, _nameTextEditingController.text);
+     await EcommerceApp.sharedPreferences.setString(EcommerceApp.userAvatarUrl, userImageUrl);
+     await EcommerceApp.sharedPreferences.setStringList(EcommerceApp.userCartList, ["garbageValue"]);
+   }
 }
