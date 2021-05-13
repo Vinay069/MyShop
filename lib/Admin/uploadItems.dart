@@ -8,7 +8,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:image/image.dart' as ImD;
+import 'package:image/image.dart';
 
 class UploadPage extends StatefulWidget {
   @override
@@ -19,10 +19,19 @@ class _UploadPageState extends State<UploadPage>
     with AutomaticKeepAliveClientMixin<UploadPage> {
   bool get wantKeepAlive => true;
   File file;
+  TextEditingController _descriptionTextEditingController =
+      TextEditingController();
+  TextEditingController _priceTextEditingController = TextEditingController();
+  TextEditingController _titleTextEditingController = TextEditingController();
+  TextEditingController _shortInfoTextEditingController =
+      TextEditingController();
+  String productId = DateTime.now().microsecondsSinceEpoch.toString();
+  bool uploading = false;
 
   @override
   Widget build(BuildContext context) {
-    return displayAdminHomeScreen();
+    return file == null ? displayAdminHomeScreen() : displayAdminUploadScreen();
+    
   }
 
   displayAdminHomeScreen() {
@@ -133,12 +142,12 @@ class _UploadPageState extends State<UploadPage>
               ),
               SimpleDialogOption(
                 child: Text(
-                  "Choose from Gallary",
+                  "Choose from Gallery",
                   style: TextStyle(
                     color: Colors.green,
                   ),
                 ),
-                onPressed: pickPhotoFromGallary(),
+                onPressed: pickPhotoFromGallery(),
               ),
               SimpleDialogOption(
                 child: Text(
@@ -169,17 +178,214 @@ class _UploadPageState extends State<UploadPage>
     });
   }
 
-  pickPhotoFromGallary() async {
+  pickPhotoFromGallery() async {
     Navigator.pop(context);
-    final imageFile = await ImagePicker().getImage(
+    final imageFile2 = await ImagePicker().getImage(
       source: ImageSource.gallery,
     );
     setState(() {
-      if (imageFile != null) {
-        file = File(imageFile.path);
+      if (imageFile2 != null) {
+        file = File(imageFile2.path);
       } else {
         print('No image selected.');
       }
+    });
+  }
+
+  displayAdminUploadScreen() {
+    return Scaffold(
+      appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: new BoxDecoration(
+            gradient: new LinearGradient(
+              colors: [Colors.pink, Colors.purple],
+              begin: const FractionalOffset(0.0, 0.0),
+              end: const FractionalOffset(1.0, 1.0),
+              stops: [0.0, 1.0],
+              tileMode: TileMode.clamp,
+            ),
+            // color: Colors.deepOrange,
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: clearFormInfo,
+        ),
+        title: Text(
+          "New Product",
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24.0),
+        ),
+        actions: [
+          TextButton(
+              onPressed: uploading ? null : () => uploadImageAndSaveItemInfo(),
+              child: Text(
+                "Add",
+                style: TextStyle(
+                    color: Colors.pink,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold),
+              ))
+        ],
+      ),
+      body: ListView(
+        children: [
+          uploading ? linearProgress() : Text(""),
+          Container(
+            height: 230.0,
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: Center(
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: FileImage(file), fit: BoxFit.cover)),
+                ),
+              ),
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(top: 12.0)),
+          ListTile(
+            leading: Icon(
+              Icons.perm_device_information,
+              color: Colors.pink,
+            ),
+            title: Container(
+              width: 250.0,
+              child: TextField(
+                style: TextStyle(color: Colors.deepPurpleAccent),
+                controller: _shortInfoTextEditingController,
+                decoration: InputDecoration(
+                  hintText: "Short Info",
+                  hintStyle: TextStyle(color: Colors.deepPurpleAccent),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          ),
+          Divider(
+            color: Colors.pink,
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.perm_device_information,
+              color: Colors.pink,
+            ),
+            title: Container(
+              width: 250.0,
+              child: TextField(
+                style: TextStyle(color: Colors.deepPurpleAccent),
+                controller: _titleTextEditingController,
+                decoration: InputDecoration(
+                  hintText: "Title",
+                  hintStyle: TextStyle(color: Colors.deepPurpleAccent),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          ),
+          Divider(
+            color: Colors.pink,
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.perm_device_information,
+              color: Colors.pink,
+            ),
+            title: Container(
+              width: 250.0,
+              child: TextField(
+                style: TextStyle(color: Colors.deepPurpleAccent),
+                controller: _descriptionTextEditingController,
+                decoration: InputDecoration(
+                  hintText: "Description",
+                  hintStyle: TextStyle(color: Colors.deepPurpleAccent),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          ),
+          Divider(
+            color: Colors.pink,
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.perm_device_information,
+              color: Colors.pink,
+            ),
+            title: Container(
+              width: 250.0,
+              child: TextField(
+                keyboardType: TextInputType.number,
+                style: TextStyle(color: Colors.deepPurpleAccent),
+                controller: _priceTextEditingController,
+                decoration: InputDecoration(
+                  hintText: "Price",
+                  hintStyle: TextStyle(color: Colors.deepPurpleAccent),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          ),
+          Divider(
+            color: Colors.pink,
+          ),
+        ],
+      ),
+    );
+  }
+
+  void clearFormInfo() {
+    file = null;
+    _descriptionTextEditingController.clear();
+    _priceTextEditingController.clear();
+    _shortInfoTextEditingController.clear();
+    _titleTextEditingController.clear();
+  }
+
+  uploadImageAndSaveItemInfo() async {
+    setState(() {
+      uploading = true;
+    });
+
+    String imageDownloadUrl = await uploadItemImage(file);
+
+    saveItemInfo(imageDownloadUrl);
+  }
+
+  Future<String> uploadItemImage(mFileImage) async {
+    final StorageReference storageReference =
+        FirebaseStorage.instance.ref().child("Items");
+    StorageUploadTask uploadTask =
+        storageReference.child("product_$productId.jpg").putFile(mFileImage);
+    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+    return downloadUrl;
+  }
+
+  saveItemInfo(String downloadUrl) {
+    final itemsRef = Firestore.instance.collection("items");
+    itemsRef.document(productId).setData({
+      "shortInfo": _shortInfoTextEditingController.text.trim(),
+      "longDescription": _descriptionTextEditingController.text.trim(),
+      "price": _priceTextEditingController.text.trim(),
+      "publishedDate": DateTime.now(),
+      "status": "available",
+      "thumbnailUrl": downloadUrl,
+      "title": _titleTextEditingController.text.trim(),
+    });
+    setState(() {
+      file = null;
+      uploading = false;
+      productId = DateTime.now().microsecondsSinceEpoch.toString();
+      _descriptionTextEditingController.clear();
+      _priceTextEditingController.clear();
+      _titleTextEditingController.clear();
+      _priceTextEditingController.clear();
     });
   }
 }

@@ -157,14 +157,16 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text("Your AdminID is not correct"),
           ));
-        } else if (result.data["password"] !=
+        }
+        if (result.data["password"] !=
             _passwordTextEditingController.text.trim()) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text("Your Admin Password is not correct"),
           ));
-        } else {
+        } 
+        else  {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("Welcome Dear Addmin, " + result.data["name"]),
+            content: Text("Welcome Dear Admin, " + result.data["name"]),
           ));
           setState(() {
             _adminIDTextEditingController.text = "";
