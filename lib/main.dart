@@ -14,13 +14,12 @@ import 'Counters/changeAddresss.dart';
 import 'Counters/totalMoney.dart';
 import 'Store/storehome.dart';
 
-Future<void> main() async
-{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   EcommerceApp.auth = FirebaseAuth.instance;
-  EcommerceApp.sharedPreferences=await SharedPreferences.getInstance();
-  EcommerceApp.firestore= Firestore.instance;
+  EcommerceApp.sharedPreferences = await SharedPreferences.getInstance();
+  EcommerceApp.firestore = Firestore.instance;
 
   runApp(MyApp());
 }
@@ -29,13 +28,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-            title: 'e-Shop',
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              primaryColor: Colors.green,
-            ),
-            home: SplashScreen()
-    );
+        title: 'e-Shop',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primaryColor: Colors.green,
+        ),
+        home: SplashScreen());
   }
 }
 
@@ -44,60 +42,52 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-
-class _SplashScreenState extends State<SplashScreen>
-{
-
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    
     super.initState();
     displaySplash();
   }
+
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Container(
-        decoration: new BoxDecoration(
+        child: Container(
+      decoration: new BoxDecoration(
           gradient: new LinearGradient(
-            colors: [Colors.pink,Colors.lightGreenAccent],
-            begin: const FractionalOffset(0.0, 0.0),
-            end:  const FractionalOffset(1.0, 1.0),
-            stops: [0.0,1.0],
-            tileMode: TileMode.clamp,
-          )
-        ),
-        child:Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset("images/welcome.png"),
-              SizedBox(height: 20.0,),
-              Text("Best Shopping Experience",
+        colors: [Colors.pink, Colors.lightGreenAccent],
+        begin: const FractionalOffset(0.0, 0.0),
+        end: const FractionalOffset(1.0, 1.0),
+        stops: [0.0, 1.0],
+        tileMode: TileMode.clamp,
+      )),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset("images/welcome.png"),
+            SizedBox(
+              height: 20.0,
+            ),
+            Text(
+              "Best Shopping Experience",
               style: TextStyle(color: Colors.white),
-              )
-              
-            ],
-          ),
-        ) ,
-      )
-    );
+            )
+          ],
+        ),
+      ),
+    ));
   }
 
   void displaySplash() {
-    Timer(Duration(seconds: 5 ), () async {
-      if(await EcommerceApp.auth.currentUser() != null)
-        {
-          Route route = MaterialPageRoute(builder: (_)=> StoreHome());
-          Navigator.pushReplacement(context, route);
-        }
-      else
-        {
-          Route route = MaterialPageRoute(builder: (_) => AuthenticScreen());
-          Navigator.pushReplacement(context, route);
-
-        }
-
+    Timer(Duration(seconds: 5), () async {
+      if (await EcommerceApp.auth.currentUser() != null) {
+        Route route = MaterialPageRoute(builder: (_) => StoreHome());
+        Navigator.pushReplacement(context, route);
+      } else {
+        Route route = MaterialPageRoute(builder: (_) => AuthenticScreen());
+        Navigator.pushReplacement(context, route);
+      }
     });
   }
 }
