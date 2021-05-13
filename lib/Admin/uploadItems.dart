@@ -138,7 +138,7 @@ class _UploadPageState extends State<UploadPage>
                     color: Colors.green,
                   ),
                 ),
-                onPressed: capturePhotoWithCamera(),
+                onPressed: pickPhotoFromGallery(),
               ),
               SimpleDialogOption(
                 child: Text(
@@ -168,7 +168,7 @@ class _UploadPageState extends State<UploadPage>
   capturePhotoWithCamera() async {
     Navigator.pop(context);
     final imageFile = await ImagePicker().getImage(
-        source: ImageSource.camera, maxHeight: 680.0, maxWidth: 970.0);
+        source: ImageSource.gallery, maxHeight: 680.0, maxWidth: 970.0);
     setState(() {
       if (imageFile != null) {
         file = File(imageFile.path);
@@ -372,7 +372,7 @@ class _UploadPageState extends State<UploadPage>
     itemsRef.document(productId).setData({
       "shortInfo": _shortInfoTextEditingController.text.trim(),
       "longDescription": _descriptionTextEditingController.text.trim(),
-      "price": _priceTextEditingController.text.trim(),
+      "price": int.parse(_priceTextEditingController.text),
       "publishedDate": DateTime.now(),
       "status": "available",
       "thumbnailUrl": downloadUrl,
