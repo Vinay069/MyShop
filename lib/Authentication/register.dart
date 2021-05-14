@@ -1,9 +1,9 @@
 // import 'dart:html';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_shop/Widgets/customTextField.dart';
-import 'package:e_shop/DialogBox/errorDialog.dart';
-import 'package:e_shop/DialogBox/loadingDialog.dart';
+import 'package:my_shop/Widgets/customTextField.dart';
+import 'package:my_shop/DialogBox/errorDialog.dart';
+import 'package:my_shop/DialogBox/loadingDialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,7 +18,7 @@ import '../Config/config.dart';
 import '../DialogBox/errorDialog.dart';
 import '../DialogBox/loadingDialog.dart';
 import '../Store/storehome.dart';
-import 'package:e_shop/Config/config.dart';
+import 'package:my_shop/Config/config.dart';
 
 import '../Store/storehome.dart';
 

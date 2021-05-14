@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_shop/Admin/adminLogin.dart';
-import 'package:e_shop/Widgets/customTextField.dart';
-import 'package:e_shop/DialogBox/errorDialog.dart';
-import 'package:e_shop/DialogBox/loadingDialog.dart';
+import 'package:my_shop/Admin/adminLogin.dart';
+import 'package:my_shop/Widgets/customTextField.dart';
+import 'package:my_shop/DialogBox/errorDialog.dart';
+import 'package:my_shop/DialogBox/loadingDialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../Admin/adminLogin.dart';
@@ -13,7 +13,7 @@ import '../DialogBox/errorDialog.dart';
 import '../DialogBox/errorDialog.dart';
 import '../DialogBox/loadingDialog.dart';
 import '../Store/storehome.dart';
-import 'package:e_shop/Config/config.dart';
+import 'package:my_shop/Config/config.dart';
 
 class Login extends StatefulWidget {
   @override

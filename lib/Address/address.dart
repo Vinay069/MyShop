@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_shop/Config/config.dart';
-import 'package:e_shop/Orders//placeOrder.dart';
-import 'package:e_shop/Widgets/customAppBar.dart';
-import 'package:e_shop/Widgets/loadingWidget.dart';
-import 'package:e_shop/Widgets/wideButton.dart';
-import 'package:e_shop/Models//address.dart';
-import 'package:e_shop/Counters/changeAddresss.dart';
+import 'package:my_shop/Config/config.dart';
+import 'package:my_shop/Orders//placeOrder.dart';
+import 'package:my_shop/Widgets/customAppBar.dart';
+import 'package:my_shop/Widgets/loadingWidget.dart';
+import 'package:my_shop/Widgets/wideButton.dart';
+import 'package:my_shop/Models//address.dart';
+import 'package:my_shop/Counters/changeAddresss.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

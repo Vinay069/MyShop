@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:e_shop/Config/config.dart';
+import 'package:my_shop/Config/config.dart';
 
 import '../Config/config.dart';
 

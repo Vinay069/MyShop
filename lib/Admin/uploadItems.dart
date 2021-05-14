@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_shop/Admin/adminShiftOrders.dart';
-import 'package:e_shop/Widgets/loadingWidget.dart';
-import 'package:e_shop/main.dart';
+import 'package:my_shop/Admin/adminShiftOrders.dart';
+import 'package:my_shop/Widgets/loadingWidget.dart';
+import 'package:my_shop/main.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';

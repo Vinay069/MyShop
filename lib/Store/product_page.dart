@@ -1,8 +1,8 @@
-import 'package:e_shop/Widgets/customAppBar.dart';
-import 'package:e_shop/Widgets/myDrawer.dart';
-import 'package:e_shop/Models/item.dart';
+import 'package:my_shop/Widgets/customAppBar.dart';
+import 'package:my_shop/Widgets/myDrawer.dart';
+import 'package:my_shop/Models/item.dart';
 import 'package:flutter/material.dart';
-import 'package:e_shop/Store/storehome.dart';
+import 'package:my_shop/Store/storehome.dart';
 
 import '../Models/item.dart';
 import '../Widgets/customAppBar.dart';

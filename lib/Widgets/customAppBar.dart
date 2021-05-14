@@ -1,5 +1,5 @@
-import 'package:e_shop/Store/cart.dart';
-import 'package:e_shop/Counters/cartitemcounter.dart';
+import 'package:my_shop/Store/cart.dart';
+import 'package:my_shop/Counters/cartitemcounter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

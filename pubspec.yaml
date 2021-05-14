@@ -1,5 +1,5 @@
-name: e_shop
-description: Flutter eCommerce App using Firebase Firestore from Coding Cafe
+name: my_shop
+description: Flutt
 
 version: 1.0.0+1
 
@@ -32,12 +32,12 @@ dev_dependencies:
   flutter_launcher_icons: "^0.8.0"
 
 flutter_launcher_name:
-  name: "RajuK"
+  name: "My Shop"
 
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/cash.png"
+  image_path: "assets/images/app_icon.png"
 
 
 flutter:
