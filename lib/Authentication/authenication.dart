@@ -31,7 +31,7 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
           ),
           title: Text(
             "MyShop",
-            style: TextStyle(fontSize: 55.0,color: Colors.white),
+            style: TextStyle(fontSize: 55.0,color: Colors.white,fontFamily: "Signatra"),
           ),
           centerTitle: true,
           bottom: TabBar(

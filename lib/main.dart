@@ -29,18 +29,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (c) =>CartItemCounter()),
-        ChangeNotifierProvider(create: (c) =>ItemQuantity()),
-        ChangeNotifierProvider(create: (c) =>AddressChanger()),
-        ChangeNotifierProvider(create: (c) =>TotalAmount()),
+        ChangeNotifierProvider(create: (c) => CartItemCounter()),
+        ChangeNotifierProvider(create: (c) => ItemQuantity()),
+        ChangeNotifierProvider(create: (c) => AddressChanger()),
+        ChangeNotifierProvider(create: (c) => TotalAmount()),
       ],
       child: MaterialApp(
-        title: 'e-Shop',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: Colors.green,
-        ),
-        home: SplashScreen()),
+          title: 'e-Shop',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primaryColor: Colors.green,
+          ),
+          home: SplashScreen()),
     );
   }
 }

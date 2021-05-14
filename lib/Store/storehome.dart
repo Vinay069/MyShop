@@ -46,7 +46,7 @@ class _StoreHomeState extends State<StoreHome> {
           ),
           title: Text(
             "My Shop",
-            style: TextStyle(fontSize: 55.0, color: Colors.white),
+            style: TextStyle(fontSize: 55.0, color: Colors.white,fontFamily: "Signatra"),
           ),
           centerTitle: true,
           actions: [
