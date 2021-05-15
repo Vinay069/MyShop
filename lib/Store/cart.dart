@@ -31,12 +31,13 @@ class _CartPageState extends State<CartPage> {
                   style: TextStyle(color: Colors.white),
                 ),
                 Container(
-                  
                   child: Padding(
                     padding: const EdgeInsets.only(left: 60),
                     child: Text(
                       "4 items",
-                      style: TextStyle(color: Colors.white, ),
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -45,7 +46,21 @@ class _CartPageState extends State<CartPage> {
           ],
         ),
       ),
-      
+
+      body: Text( EcommerceApp.sharedPreferences
+                      .getString(EcommerceApp.userName)),
+      // body: Column(
+      //   children: [
+      //     Container(
+      //       child: Text(EcommerceApp.sharedPreferences
+      //           .getString(EcommerceApp.userName)),
+                
+      //     ),
+      //     Container(
+      //       child: Text(Firestore.instance.collection('users').document('name')),
+      //     )
+      //   ],
+      // ),
     );
 
     // return Scaffold(

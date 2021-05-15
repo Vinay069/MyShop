@@ -377,6 +377,7 @@ class _UploadPageState extends State<UploadPage>
       "status": "available",
       "thumbnailUrl": downloadUrl,
       "title": _titleTextEditingController.text.trim(),
+      "productId":productId,
     });
     setState(() {
       file = null;

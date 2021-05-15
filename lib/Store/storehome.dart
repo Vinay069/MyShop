@@ -162,12 +162,14 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
+                        
                         Expanded(
                           child: Text(
                             model.title,
                             style:
                                 TextStyle(color: Colors.black, fontSize: 14.0),
                           ),
+                          
                         ),
                       ],
                     ),
@@ -293,7 +295,7 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                       icon: Icon(Icons.add_shopping_cart, color: Colors.pinkAccent,),
                       onPressed: ()
                       {
-                        checkItemInCart(model.shortInfo, context);
+                        checkItemInCart(model.productId, context);
                       },
                     )
                     : IconButton(
@@ -318,16 +320,16 @@ Widget card({Color primaryColor = Colors.redAccent, String imgPath}) {
   return Container();
 }
 
-void checkItemInCart(String shortInfoAsID, BuildContext context) {
-  EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList).contains(shortInfoAsID)
+void checkItemInCart(String productIdAsID, BuildContext context) {
+  EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList).contains(productIdAsID)
   ? Fluttertoast.showToast(msg: "Item is already in Cart.")
-  : addItemToCart(shortInfoAsID,context);
+  : addItemToCart(productIdAsID,context);
   
 }
- addItemToCart(String shortInfoAsID, BuildContext context)
+ addItemToCart(String productIdAsID, BuildContext context)
  {
    List tempCartList = EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
-   tempCartList.add(shortInfoAsID);
+   tempCartList.add(productIdAsID);
 
    EcommerceApp.firestore.collection(EcommerceApp.collectionUser)
    .document(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
