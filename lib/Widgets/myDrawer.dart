@@ -4,6 +4,7 @@ import 'package:my_shop/Address/addAddress.dart';
 import 'package:my_shop/Store/Search.dart';
 import 'package:my_shop/Store/cart.dart';
 import 'package:my_shop/Orders/myOrders.dart';
+import 'package:my_shop/Store/profile.dart';
 import 'package:my_shop/Store/storehome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -65,7 +66,7 @@ class MyDrawer extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 12.0,
+            height: 5.0,
           ),
           Container(
             padding: EdgeInsets.only(top: 1.0),
@@ -97,9 +98,29 @@ class MyDrawer extends StatelessWidget {
                   },
                 ),
                 Divider(
-                  height: 10.0,
+                  // height: 10.0,
                   color: Colors.white,
-                  thickness: 6.0,
+                  // thickness: 6.0,
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.person,
+                    color: Colors.white,
+                  ),
+                  title: Text(
+                    "Profile",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onTap: () {
+                    Route route =
+                        MaterialPageRoute(builder: (c) => ProfileScreen());
+                    Navigator.pushReplacement(context, route);
+                  },
+                ),
+                Divider(
+                  // height: 10.0,
+                  color: Colors.white,
+                  // thickness: 6.0,
                 ),
                 ListTile(
                   leading: Icon(
@@ -116,9 +137,9 @@ class MyDrawer extends StatelessWidget {
                   },
                 ),
                 Divider(
-                  height: 10.0,
+                  // height: 10.0,
                   color: Colors.white,
-                  thickness: 6.0,
+                  // thickness: 6.0,
                 ),
                 ListTile(
                   leading: Icon(
@@ -135,9 +156,9 @@ class MyDrawer extends StatelessWidget {
                   },
                 ),
                 Divider(
-                  height: 10.0,
+                  // height: 10.0,
                   color: Colors.white,
-                  thickness: 6.0,
+                  // thickness: 6.0,
                 ),
                 ListTile(
                   leading: Icon(
@@ -155,30 +176,11 @@ class MyDrawer extends StatelessWidget {
                   },
                 ),
                 Divider(
-                  height: 10.0,
+                  // height: 10.0,
                   color: Colors.white,
-                  thickness: 6.0,
+                  // thickness: 6.0,
                 ),
-                ListTile(
-                  leading: Icon(
-                    Icons.add_location,
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    "Add new address",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {
-                    Route route =
-                        MaterialPageRoute(builder: (c) => AddAddress());
-                    Navigator.pushReplacement(context, route);
-                  },
-                ),
-                Divider(
-                  height: 10.0,
-                  color: Colors.white,
-                  thickness: 6.0,
-                ),
+              
                 ListTile(
                   leading: Icon(
                     Icons.exit_to_app,
@@ -197,9 +199,9 @@ class MyDrawer extends StatelessWidget {
                   },
                 ),
                 Divider(
-                  height: 10.0,
+                  // height: 10.0,
                   color: Colors.white,
-                  thickness: 6.0,
+                  // thickness: 6.0,
                 ),
               ],
             ),
