@@ -7,9 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../Admin/adminLogin.dart';
 import '../Config/config.dart';
-import '../Config/config.dart';
-import '../Config/config.dart';
-import '../DialogBox/errorDialog.dart';
 import '../DialogBox/errorDialog.dart';
 import '../DialogBox/loadingDialog.dart';
 import '../Store/storehome.dart';
@@ -147,7 +144,7 @@ class _LoginState extends State<Login> {
           });
     });
     if (firebaseUser != null) {
-      readData(firebaseUser).then((s){
+      readData(firebaseUser).then((s) {
         Navigator.pop(context);
         Route route = MaterialPageRoute(builder: (c) => StoreHome());
         Navigator.pushReplacement(context, route);
@@ -173,6 +170,7 @@ class _LoginState extends State<Login> {
           dataSnapshot.data[EcommerceApp.userCartList].cast<String>();
       await EcommerceApp.sharedPreferences
           .setStringList(EcommerceApp.userCartList, cartList);
+
     });
   }
 }

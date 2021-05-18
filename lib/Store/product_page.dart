@@ -21,93 +21,91 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Scaffold(
-        appBar: MyAppBar(),
-        drawer: MyDrawer(),
-        body: ListView(
-          children: [
-            Container(
-              padding: EdgeInsets.all(15.0),
-              width: MediaQuery.of(context).size.width,
-              color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Stack(
-                    children: [
-                      Center(
-                        child: Image.network(widget.itemModel.thumbnailUrl),
+    return Scaffold(
+      appBar: MyAppBar(),
+      drawer: MyDrawer(),
+      body: ListView(
+        children: [
+          Container(
+            padding: EdgeInsets.all(15.0),
+            width: MediaQuery.of(context).size.width,
+            color: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Stack(
+                  children: [
+                    Center(
+                      child: Image.network(widget.itemModel.thumbnailUrl),
+                    ),
+                    Container(
+                      color: Colors.grey[300],
+                      child: SizedBox(
+                        height: 1.0,
+                        width: double.infinity,
                       ),
-                      Container(
-                        color: Colors.grey[300],
-                        child: SizedBox(
-                          height: 1.0,
-                          width: double.infinity,
+                    ),
+                  ],
+                ),
+                Container(
+                  padding: EdgeInsets.all(20.0),
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.itemModel.title,
+                          style: boldTextStyle,
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Text(
+                          widget.itemModel.longDescription,
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Text(
+                          "₹ " + widget.itemModel.price.toString(),
+                          style: boldTextStyle,
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                      ],
+                    ),
                   ),
-                  Container(
-                    padding: EdgeInsets.all(20.0),
-                    child: Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.itemModel.title,
-                            style: boldTextStyle,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 8.0),
+                  child: Center(
+                    child: InkWell(
+                      onTap: () => checkItemInCart(widget.itemModel.shortInfo, context),
+                      child: Container(
+                        decoration: new BoxDecoration(
+                          gradient: new LinearGradient(
+                            colors: [Colors.pink, Colors.purple],
+                            begin: const FractionalOffset(0.0, 0.0),
+                            end: const FractionalOffset(1.0, 1.0),
+                            stops: [0.0, 1.0],
+                            tileMode: TileMode.clamp,
                           ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          Text(
-                            widget.itemModel.longDescription,
-                          ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          Text(
-                            "₹ " + widget.itemModel.price.toString(),
-                            style: boldTextStyle,
-                          ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                        ],
+                          // color: Colors.deepOrange,
+                        ),
+                        width: MediaQuery.of(context).size.width - 40.0,
+                        height: 50.0,
+                        child: Center(
+                          child: Text("Add to Cart", style: TextStyle(color: Colors.white),),
+                        ),
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 8.0),
-                    child: Center(
-                      child: InkWell(
-                        onTap: () => checkItemInCart(widget.itemModel.shortInfo, context),
-                        child: Container(
-                          decoration: new BoxDecoration(
-                            gradient: new LinearGradient(
-                              colors: [Colors.pink, Colors.purple],
-                              begin: const FractionalOffset(0.0, 0.0),
-                              end: const FractionalOffset(1.0, 1.0),
-                              stops: [0.0, 1.0],
-                              tileMode: TileMode.clamp,
-                            ),
-                            // color: Colors.deepOrange,
-                          ),
-                          width: MediaQuery.of(context).size.width - 40.0,
-                          height: 50.0,
-                          child: Center(
-                            child: Text("Add to Cart", style: TextStyle(color: Colors.white),),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

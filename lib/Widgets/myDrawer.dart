@@ -160,26 +160,26 @@ class MyDrawer extends StatelessWidget {
                   color: Colors.white,
                   // thickness: 6.0,
                 ),
-                ListTile(
-                  leading: Icon(
-                    Icons.search,
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    "Search",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {
-                    Route route =
-                        MaterialPageRoute(builder: (c) => SearchProduct());
-                    Navigator.pushReplacement(context, route);
-                  },
-                ),
-                Divider(
-                  // height: 10.0,
-                  color: Colors.white,
-                  // thickness: 6.0,
-                ),
+                // ListTile(
+                //   leading: Icon(
+                //     Icons.search,
+                //     color: Colors.white,
+                //   ),
+                //   title: Text(
+                //     "Search",
+                //     style: TextStyle(color: Colors.white),
+                //   ),
+                //   onTap: () {
+                //     Route route =
+                //         MaterialPageRoute(builder: (c) => SearchProduct());
+                //     Navigator.pushReplacement(context, route);
+                //   },
+                // ),
+                // Divider(
+                //   // height: 10.0,
+                //   color: Colors.white,
+                //   // thickness: 6.0,
+                // ),
               
                 ListTile(
                   leading: Icon(

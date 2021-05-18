@@ -29,110 +29,111 @@ class _StoreHomeState extends State<StoreHome> {
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          flexibleSpace: Container(
-            decoration: new BoxDecoration(
-              gradient: new LinearGradient(
-                colors: [Colors.pink, Colors.purple],
-                begin: const FractionalOffset(0.0, 0.0),
-                end: const FractionalOffset(1.0, 1.0),
-                stops: [0.0, 1.0],
-                tileMode: TileMode.clamp,
-              ),
-              // color: Colors.deepOrange,
+    return Scaffold(
+      appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: new BoxDecoration(
+            gradient: new LinearGradient(
+              colors: [Colors.pink, Colors.purple],
+              begin: const FractionalOffset(0.0, 0.0),
+              end: const FractionalOffset(1.0, 1.0),
+              stops: [0.0, 1.0],
+              tileMode: TileMode.clamp,
             ),
+            // color: Colors.deepOrange,
           ),
-          title: Text(
-            "My Shop",
-            style: TextStyle(fontSize: 55.0, color: Colors.white,fontFamily: "Signatra"),
-          ),
-          centerTitle: true,
-          actions: [
-            Stack(
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.shopping_cart,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Route route = MaterialPageRoute(builder: (c) => CartPage());
-                    Navigator.pushReplacement(context, route);
-                  },
+        ),
+        title: Text(
+          "My Shop",
+          style: TextStyle(
+              fontSize: 55.0, color: Colors.white, fontFamily: "Signatra"),
+        ),
+        centerTitle: true,
+        actions: [
+          Stack(
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.shopping_cart,
+                  color: Colors.white,
                 ),
-                Positioned(
-                    child: Stack(
-                  children: [
-                    Icon(
-                      Icons.brightness_1,
-                      size: 20.0,
-                      color: Colors.green,
+                onPressed: () {
+                  Route route = MaterialPageRoute(builder: (c) => CartPage());
+                  Navigator.pushReplacement(context, route);
+                },
+              ),
+              Positioned(
+                  child: Stack(
+                children: [
+                  Icon(
+                    Icons.brightness_1,
+                    size: 20.0,
+                    color: Colors.green,
+                  ),
+                  Positioned(
+                    top: 3.0,
+                    bottom: 4.0,
+                    left: 6.5,
+                    child: Consumer<CartItemCounter>(
+                      builder: (context, counter, _) {
+                        return Text(
+                          counter.count.toString(),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w500),
+                        );
+                      },
                     ),
-                    Positioned(
-                      top: 3.0,
-                      bottom: 4.0,
-                      left: 6.5,
-                      child: Consumer<CartItemCounter>(
-                        builder: (context, counter, _) {
-                          return Text(
-                            counter.count.toString(),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w500),
-                          );
-                        },
+                  ),
+                ],
+              ))
+            ],
+          ),
+        ],
+      ),
+      drawer: MyDrawer(),
+      body: CustomScrollView(
+        slivers: [
+          SliverPersistentHeader(pinned: true, delegate: SearchBoxDelegate()),
+          StreamBuilder<QuerySnapshot>(
+            stream: Firestore.instance
+                .collection("items")
+                .limit(15)
+                .orderBy("publishedDate", descending: true)
+                .snapshots(),
+            builder: (context, dataSnapshot) {
+              return !dataSnapshot.hasData
+                  ? SliverToBoxAdapter(
+                      child: Center(
+                        child: circularProgress(),
                       ),
-                    ),
-                  ],
-                ))
-              ],
-            ),
-          ],
-        ),
-        drawer: MyDrawer(),
-        body: CustomScrollView(
-          slivers: [
-            SliverPersistentHeader(pinned: true, delegate: SearchBoxDelegate()),
-            StreamBuilder<QuerySnapshot>(
-              stream: Firestore.instance
-                  .collection("items")
-                  .limit(15)
-                  .orderBy("publishedDate", descending: true)
-                  .snapshots(),
-              builder: (context, dataSnapshot) {
-                return !dataSnapshot.hasData
-                    ? SliverToBoxAdapter(
-                        child: Center(
-                          child: circularProgress(),
-                        ),
-                      )
-                    : SliverStaggeredGrid.countBuilder(
-                        crossAxisCount: 1,
-                        staggeredTileBuilder: (c) => StaggeredTile.fit(1),
-                        itemBuilder: (context, index) {
-                          ItemModel model = ItemModel.fromJson(
-                              dataSnapshot.data.documents[index].data);
-                          return sourceInfo(model, context);
-                        },
-                        itemCount: dataSnapshot.data.documents.length,
-                      );
-              },
-            ),
-          ],
-        ),
+                    )
+                  : SliverStaggeredGrid.countBuilder(
+                      crossAxisCount: 1,
+                      staggeredTileBuilder: (c) => StaggeredTile.fit(1),
+                      itemBuilder: (context, index) {
+                        ItemModel model = ItemModel.fromJson(
+                            dataSnapshot.data.documents[index].data);
+
+                        return sourceInfo(model, context);
+                      },
+                      itemCount: dataSnapshot.data.documents.length,
+                    );
+            },
+          ),
+        ],
       ),
     );
   }
 }
-
+ 
 Widget sourceInfo(ItemModel model, BuildContext context,
     {Color background, removeCartFunction}) {
   return InkWell(
     onTap: () {
-      Route route = MaterialPageRoute(builder: (c) => ProductPage(itemModel: model));
+      Route route =
+          MaterialPageRoute(builder: (c) => ProductPage(itemModel: model));
       Navigator.pushReplacement(context, route);
     },
     splashColor: Colors.pink,
@@ -162,14 +163,12 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        
                         Expanded(
                           child: Text(
                             model.title,
                             style:
                                 TextStyle(color: Colors.black, fontSize: 14.0),
                           ),
-                          
                         ),
                       ],
                     ),
@@ -291,16 +290,21 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                   Align(
                     alignment: Alignment.centerRight,
                     child: removeCartFunction == null
-                    ? IconButton(
-                      icon: Icon(Icons.add_shopping_cart, color: Colors.pinkAccent,),
-                      onPressed: ()
-                      {
-                        checkItemInCart(model.productId, context);
-                      },
-                    )
-                    : IconButton(
-                      icon: Icon(Icons.delete, color: Colors.pinkAccent,),
-                    ),
+                        ? IconButton(
+                            icon: Icon(
+                              Icons.add_shopping_cart,
+                              color: Colors.pinkAccent,
+                            ),
+                            onPressed: () {
+                              checkItemInCart(model.productId, context);
+                            },
+                          )
+                        : IconButton(
+                            icon: Icon(
+                              Icons.delete,
+                              color: Colors.pinkAccent,
+                            ),
+                          ),
                   ),
                   Divider(
                     height: 10.0,
@@ -321,25 +325,33 @@ Widget card({Color primaryColor = Colors.redAccent, String imgPath}) {
 }
 
 void checkItemInCart(String productIdAsID, BuildContext context) {
-  EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList).contains(productIdAsID)
-  ? Fluttertoast.showToast(msg: "Item is already in Cart.")
-  : addItemToCart(productIdAsID,context);
-  
+  EcommerceApp.sharedPreferences
+          .getStringList(EcommerceApp.userCartList)
+          .contains(productIdAsID)
+      ? Fluttertoast.showToast(msg: "Item is already in Cart.")
+      : addItemToCart(productIdAsID, context);
 }
- addItemToCart(String productIdAsID, BuildContext context)
- {
-   List tempCartList = EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
-   tempCartList.add(productIdAsID);
 
-   EcommerceApp.firestore.collection(EcommerceApp.collectionUser)
-   .document(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
-   .updateData({
-     EcommerceApp.userCartList: tempCartList,
-   }).then((v){
-     Fluttertoast.showToast(msg: "Item added to Cart Successfully.");
+addItemToCart(String productIdAsID, BuildContext context) {
+  var usercartlist =
+      EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
+  print(usercartlist);
 
-     EcommerceApp.sharedPreferences.setStringList(EcommerceApp.userCartList, tempCartList);
+  List tempCartList =
+      EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
+  tempCartList.add(productIdAsID);
 
-     Provider.of<CartItemCounter>(context, listen: false).displayResult();
-   });
- }
+  EcommerceApp.firestore
+      .collection(EcommerceApp.collectionUser)
+      .document(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
+      .updateData({
+    EcommerceApp.userCartList: tempCartList,
+  }).then((v) {
+    Fluttertoast.showToast(msg: "Item added to Cart Successfully.");
+
+    EcommerceApp.sharedPreferences
+        .setStringList(EcommerceApp.userCartList, tempCartList);
+
+    Provider.of<CartItemCounter>(context, listen: false).displayResult();
+  });
+}

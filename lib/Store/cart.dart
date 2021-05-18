@@ -1,4 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:my_shop/Config/config.dart';
 import 'package:my_shop/Address/address.dart';
@@ -10,7 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:my_shop/Store/storehome.dart';
 import 'package:provider/provider.dart';
+import '../Config/config.dart';
+import '../Widgets/myDrawer.dart';
 import '../main.dart';
+import 'dart:core';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../Widgets/searchBox.dart';
 
 class CartPage extends StatefulWidget {
   @override
@@ -18,104 +24,70 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  var userid = EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID);
+
+  // var cartLister =
+  //     EcommerceApp.sharedPreferences.getString(EcommerceApp.userCartList);
+  // List<String> lister = [];
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Column(
-          children: [
-            Row(
-              children: [
-                Text(
-                  "Your Cart",
-                  style: TextStyle(color: Colors.white),
+      appBar: AppBar(title: Text("My Cart")),
+      drawer: MyDrawer(),
+      body: CustomScrollView(
+        slivers: [
+          SliverPersistentHeader(pinned: true, delegate: SearchBoxDelegate()),
+          StreamBuilder<QuerySnapshot>(
+            stream: Firestore.instance.collection("items").snapshots(),
+            builder: (context, dataSnapshot) {
+              return !dataSnapshot.hasData
+                  ? SliverToBoxAdapter(
+                child: Center(
+                  child: circularProgress(),
                 ),
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 60),
-                    child: Text(
-                      "4 items",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
+              )
+                  : SliverStaggeredGrid.countBuilder(
+                crossAxisCount: 1,
+                staggeredTileBuilder: (c) => StaggeredTile.fit(1),
+                itemBuilder: (context, index) {
+                  ItemModel model = ItemModel.fromJson(
+                      dataSnapshot.data.documents[index].data);
+                  if (checkItemInUserCart(model.productId, context)) {
+                    return sourceInfo(model, context);
+                  }
+                  else {
+
+                    return Divider(
+                      // height: 10.0,
+                      color: Colors.green,
+                      // thickness: 6.0,
+                    );
+                  }
+                },
+                itemCount: dataSnapshot.data.documents.length,
+              );
+            },
+          ),
+        ],
       ),
-
-      body: Text( EcommerceApp.sharedPreferences
-                      .getString(EcommerceApp.userName)),
-      // body: Column(
-      //   children: [
-      //     Container(
-      //       child: Text(EcommerceApp.sharedPreferences
-      //           .getString(EcommerceApp.userName)),
-                
-      //     ),
-      //     Container(
-      //       child: Text(Firestore.instance.collection('users').document('name')),
-      //     )
-      //   ],
-      // ),
     );
+  }
 
-    // return Scaffold(
-    //   appBar: AppBar(
-    //       flexibleSpace: Container(
-    //         decoration: new BoxDecoration(
-    //           gradient: new LinearGradient(
-    //             colors: [Colors.pink, Colors.purple],
-    //             begin: const FractionalOffset(0.0, 0.0),
-    //             end: const FractionalOffset(1.0, 1.0),
-    //             stops: [0.0, 1.0],
-    //             tileMode: TileMode.clamp,
-    //           ),
-    //           // color: Colors.deepOrange,
-    //         ),
-    //       ),
-    //       title: Text(
-    //         "My Cart",
-    //         style: TextStyle(fontSize: 55.0, color: Colors.white,fontFamily: "Signatra"),
-    //       ),
-    //       centerTitle: true,
-
-    //     ),
-
-    //     body:  CustomScrollView(
-    //       slivers: [
-    //         // SliverPersistentHeader(pinned: true, delegate: SearchBoxDelegate()),
-    //         StreamBuilder<QuerySnapshot>(
-    //           stream: Firestore.instance
-    //               .collection("items")
-    //               .limit(15)
-    //               .orderBy("publishedDate", descending: true)
-    //               .snapshots(),
-    //           builder: (context, dataSnapshot) {
-    //             return !dataSnapshot.hasData
-    //                 ? SliverToBoxAdapter(
-    //                     child: Center(
-    //                       child: circularProgress(),
-    //                     ),
-    //                   )
-    //                 : SliverStaggeredGrid.countBuilder(
-    //                     crossAxisCount: 1,
-    //                     staggeredTileBuilder: (c) => StaggeredTile.fit(1),
-    //                     itemBuilder: (context, index) {
-    //                       ItemModel model = ItemModel.fromJson(
-    //                           dataSnapshot.data.documents[index].data);
-    //                       return sourceInfo(model, context);
-    //                     },
-    //                     itemCount: dataSnapshot.data.documents.length,
-    //                   );
-    //           },
-    //         ),
-    //       ],
-    //     ),
-
-    // );
+  bool checkItemInUserCart(String productIdAsID, BuildContext context) {
+    print("hi");
+    print(productIdAsID);
+    print(EcommerceApp.sharedPreferences
+        .getStringList(EcommerceApp.userCartList));
+    print(EcommerceApp.sharedPreferences
+        .getStringList(EcommerceApp.userCartList)
+        .contains(productIdAsID));
+    return EcommerceApp.sharedPreferences
+        .getStringList(EcommerceApp.userCartList)
+        .contains(productIdAsID);
   }
 }
