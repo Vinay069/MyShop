@@ -68,17 +68,7 @@ class _CartPageState extends State<CartPage> {
         actions: [
           Stack(
             children: [
-              // TextButton(
-              //   child: Text("Checkout",
-              //   style: TextStyle(fontSize: 19),),
-
-              //   onPressed: () {
-              //     // Route route = MaterialPageRoute(builder: (c) => CartPage());
-              //     // Navigator.pushReplacement(context, route);
-              //     Navigator.push(context,
-              //         MaterialPageRoute(builder: (context) => CartPage()));
-              //   },
-              // ),
+              
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: RaisedButton(

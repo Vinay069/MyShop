@@ -29,7 +29,24 @@ class _AddressScreenState extends State<AddressScreen> {
           "My Address",
           style: TextStyle(fontFamily: "Signatra", fontSize: 40.0),
         ),
-        centerTitle: true,
+        actions: [
+          Stack(
+            children: [
+              
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RaisedButton(
+                  onPressed: () {
+                     Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AddressScreen()));
+
+                  },
+                  child: Text("Order Now"),
+                ),
+              )
+            ],
+          ),
+        ],
       ),
       drawer: MyDrawer(),
       body: SingleChildScrollView(
@@ -149,13 +166,16 @@ class _AddressScreenState extends State<AddressScreen> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //
-          saveUserInfoToFireStore(userid);
-        },
-        child: Icon(Icons.done),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     //
+      //     saveUserInfoToFireStore(userid);
+      //   },
+      //   child: Text("Order Now"),
+        
+      // ),
+      
+      
     );
   }
 
@@ -172,10 +192,10 @@ class _AddressScreenState extends State<AddressScreen> {
     //   "aPincode": _aPincodeTextEditingController.text.trim(),
 
     // });
-    Firestore.instance.collection("users").document(uid)
-        .collection('address')
-        .document()
-        .updateData({'aPincode': _aPincodeTextEditingController.text.trim()});
+    // Firestore.instance.collection("users").document(uid)
+    //     .collection('address')
+    //     .document()
+    //     .updateData({'aPincode': _aPincodeTextEditingController.text.trim()});
 
     // await EcommerceApp.sharedPreferences.setString("uid", fUser.uid);
     // await EcommerceApp.sharedPreferences

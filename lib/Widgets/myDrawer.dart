@@ -103,30 +103,30 @@ class MyDrawer extends StatelessWidget {
                   color: Colors.white,
                   // thickness: 6.0,
                 ),
-                ListTile(
-                  leading: Icon(
-                    Icons.person,
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    "My Address",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {
-                    // Route route =
-                    //     MaterialPageRoute(builder: (c) => AddressScreen());
-                    // Navigator.pushReplacement(context, route);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AddressScreen()));
-                  },
-                ),
-                Divider(
-                  // height: 10.0,
-                  color: Colors.white,
-                  // thickness: 6.0,
-                ),
+                // ListTile(
+                //   leading: Icon(
+                //     Icons.person,
+                //     color: Colors.white,
+                //   ),
+                //   title: Text(
+                //     "My Address",
+                //     style: TextStyle(color: Colors.white),
+                //   ),
+                //   onTap: () {
+                //     // Route route =
+                //     //     MaterialPageRoute(builder: (c) => AddressScreen());
+                //     // Navigator.pushReplacement(context, route);
+                //     Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //             builder: (context) => AddressScreen()));
+                //   },
+                // ),
+                // Divider(
+                //   // height: 10.0,
+                //   color: Colors.white,
+                //   // thickness: 6.0,
+                // ),
                 ListTile(
                   leading: Icon(
                     Icons.reorder,
