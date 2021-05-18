@@ -102,6 +102,31 @@ class _ProductPageState extends State<ProductPage> {
                     ),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(top: 8.0),
+                  child: Center(
+                    child: InkWell(
+                      onTap: () => checkItemInCart(widget.itemModel.shortInfo, context),
+                      child: Container(
+                        decoration: new BoxDecoration(
+                          gradient: new LinearGradient(
+                            colors: [Colors.pink, Colors.purple],
+                            begin: const FractionalOffset(0.0, 0.0),
+                            end: const FractionalOffset(1.0, 1.0),
+                            stops: [0.0, 1.0],
+                            tileMode: TileMode.clamp,
+                          ),
+                          // color: Colors.deepOrange,
+                        ),
+                        width: MediaQuery.of(context).size.width - 40.0,
+                        height: 50.0,
+                        child: Center(
+                          child: Text("Buy Now", style: TextStyle(color: Colors.white),),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           )

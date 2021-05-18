@@ -64,7 +64,7 @@ class _CartPageState extends State<CartPage> {
 
                     return Divider(
                       // height: 10.0,
-                      color: Colors.green,
+                      color: Colors.white,
                       // thickness: 6.0,
                     );
                   }

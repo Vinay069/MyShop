@@ -9,18 +9,15 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import '../Admin/uploadItems.dart';
+// import '../Admin/uploadItems.dart';
 import '../Config/config.dart';
-import '../Config/config.dart';
-import '../Config/config.dart';
-import '../Config/config.dart';
-import '../Config/config.dart';
+
 import '../DialogBox/errorDialog.dart';
 import '../DialogBox/loadingDialog.dart';
 import '../Store/storehome.dart';
 import 'package:my_shop/Config/config.dart';
 
-import '../Store/storehome.dart';
+// import '../Store/storehome.dart';
 
 class Register extends StatefulWidget {
   @override
