@@ -58,8 +58,10 @@ class _StoreHomeState extends State<StoreHome> {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  Route route = MaterialPageRoute(builder: (c) => CartPage());
-                  Navigator.pushReplacement(context, route);
+                  // Route route = MaterialPageRoute(builder: (c) => CartPage());
+                  // Navigator.pushReplacement(context, route);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CartPage()));
                 },
               ),
               Positioned(
@@ -127,14 +129,18 @@ class _StoreHomeState extends State<StoreHome> {
     );
   }
 }
- 
+
 Widget sourceInfo(ItemModel model, BuildContext context,
     {Color background, removeCartFunction}) {
   return InkWell(
     onTap: () {
-      Route route =
-          MaterialPageRoute(builder: (c) => ProductPage(itemModel: model));
-      Navigator.pushReplacement(context, route);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ProductPage(itemModel: model)));
+      // Route route =
+      //     MaterialPageRoute(builder: (c) => ProductPage(itemModel: model));
+      // Navigator.pushReplacement(context, route);
     },
     splashColor: Colors.pink,
     child: Padding(

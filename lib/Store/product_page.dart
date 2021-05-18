@@ -81,7 +81,7 @@ class _ProductPageState extends State<ProductPage> {
                   padding: EdgeInsets.only(top: 8.0),
                   child: Center(
                     child: InkWell(
-                      onTap: () => checkItemInCart(widget.itemModel.shortInfo, context),
+                      onTap: () => checkItemInCart(widget.itemModel.productId,context),
                       child: Container(
                         decoration: new BoxDecoration(
                           gradient: new LinearGradient(
@@ -96,7 +96,10 @@ class _ProductPageState extends State<ProductPage> {
                         width: MediaQuery.of(context).size.width - 40.0,
                         height: 50.0,
                         child: Center(
-                          child: Text("Add to Cart", style: TextStyle(color: Colors.white),),
+                          child: Text(
+                            "Add to Cart",
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
                     ),
@@ -106,7 +109,8 @@ class _ProductPageState extends State<ProductPage> {
                   padding: EdgeInsets.only(top: 8.0),
                   child: Center(
                     child: InkWell(
-                      onTap: () => checkItemInCart(widget.itemModel.shortInfo, context),
+                      onTap: () =>
+                          buyNowToAddress(widget.itemModel.productId),
                       child: Container(
                         decoration: new BoxDecoration(
                           gradient: new LinearGradient(
@@ -121,7 +125,10 @@ class _ProductPageState extends State<ProductPage> {
                         width: MediaQuery.of(context).size.width - 40.0,
                         height: 50.0,
                         child: Center(
-                          child: Text("Buy Now", style: TextStyle(color: Colors.white),),
+                          child: Text(
+                            "Buy Now",
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
                     ),
@@ -133,6 +140,10 @@ class _ProductPageState extends State<ProductPage> {
         ],
       ),
     );
+  }
+
+  buyNowToAddress(String productId) {
+    print('Buy Now'+productId);
   }
 }
 

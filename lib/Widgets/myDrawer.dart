@@ -1,15 +1,14 @@
 import 'package:my_shop/Authentication/authenication.dart';
 import 'package:my_shop/Config/config.dart';
-import 'package:my_shop/Address/addAddress.dart';
+
 import 'package:my_shop/Store/Search.dart';
 import 'package:my_shop/Store/cart.dart';
 import 'package:my_shop/Orders/myOrders.dart';
-import 'package:my_shop/Store/profile.dart';
+import 'package:my_shop/Store/addressPage.dart';
 import 'package:my_shop/Store/storehome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../Address/addAddress.dart';
 import '../Authentication/authenication.dart';
 import '../Config/config.dart';
 import '../Config/config.dart';
@@ -92,9 +91,11 @@ class MyDrawer extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: () {
-                    Route route =
-                        MaterialPageRoute(builder: (c) => StoreHome());
-                    Navigator.pushReplacement(context, route);
+                    // Route route =
+                    //     MaterialPageRoute(builder: (c) => StoreHome());
+                    // Navigator.pushReplacement(context, route);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => StoreHome()));
                   },
                 ),
                 Divider(
@@ -108,13 +109,17 @@ class MyDrawer extends StatelessWidget {
                     color: Colors.white,
                   ),
                   title: Text(
-                    "Profile",
+                    "My Address",
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: () {
-                    Route route =
-                        MaterialPageRoute(builder: (c) => ProfileScreen());
-                    Navigator.pushReplacement(context, route);
+                    // Route route =
+                    //     MaterialPageRoute(builder: (c) => AddressScreen());
+                    // Navigator.pushReplacement(context, route);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddressScreen()));
                   },
                 ),
                 Divider(
@@ -132,8 +137,10 @@ class MyDrawer extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: () {
-                    Route route = MaterialPageRoute(builder: (c) => MyOrders());
-                    Navigator.pushReplacement(context, route);
+                    // Route route = MaterialPageRoute(builder: (c) => MyOrders());
+                    // Navigator.pushReplacement(context, route);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MyOrders()));
                   },
                 ),
                 Divider(
@@ -151,8 +158,10 @@ class MyDrawer extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: () {
-                    Route route = MaterialPageRoute(builder: (c) => CartPage());
-                    Navigator.pushReplacement(context, route);
+                    // Route route = MaterialPageRoute(builder: (c) => CartPage());
+                    // Navigator.pushReplacement(context, route);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => CartPage()));
                   },
                 ),
                 Divider(
@@ -180,7 +189,7 @@ class MyDrawer extends StatelessWidget {
                 //   color: Colors.white,
                 //   // thickness: 6.0,
                 // ),
-              
+
                 ListTile(
                   leading: Icon(
                     Icons.exit_to_app,

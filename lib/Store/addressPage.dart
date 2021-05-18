@@ -1,22 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_shop/Config/config.dart';
 
 import '../Widgets/myDrawer.dart';
 
-class ProfileScreen extends StatefulWidget {
+class AddressScreen extends StatefulWidget {
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  _AddressScreenState createState() => _AddressScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _AddressScreenState extends State<AddressScreen> {
+  var userid = EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID);
+
+  final _aNameTextEditingController = TextEditingController();
+  final _aMobileTextEditingController = TextEditingController();
+  final _aAddressTextEditingController = TextEditingController();
+  final _aCityTextEditingController = TextEditingController();
+  final _aStateTextEditingController = TextEditingController();
+  final _aPincodeTextEditingController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        
         backgroundColor: Colors.pinkAccent,
-        title: Text("Profile" ,style: TextStyle(fontFamily: "Signatra", fontSize: 40.0),),
+        title: Text(
+          "My Address",
+          style: TextStyle(fontFamily: "Signatra", fontSize: 40.0),
+        ),
         centerTitle: true,
       ),
       drawer: MyDrawer(),
@@ -30,6 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             children: [
               TextFormField(
+                controller: _aNameTextEditingController,
                 validator: (String value) {
                   if (value.isEmpty) {
                     return 'Name cannot be empty';
@@ -46,6 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               SizedBox(height: 10.0),
               TextFormField(
+                controller: _aMobileTextEditingController,
                 keyboardType: TextInputType.number,
                 validator: (String value) {
                   if (value.isEmpty) {
@@ -62,8 +76,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               SizedBox(height: 10.0),
-              
               TextFormField(
+                controller: _aAddressTextEditingController,
                 validator: (String value) {
                   if (value.isEmpty) {
                     return 'Address cannot be empty';
@@ -77,11 +91,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0)),
                 ),
-                
               ),
               SizedBox(height: 10.0),
-              
               TextFormField(
+                controller: _aCityTextEditingController,
                 validator: (String value) {
                   if (value.isEmpty) {
                     return 'City cannot be empty';
@@ -98,6 +111,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               SizedBox(height: 10.0),
               TextFormField(
+                controller: _aStateTextEditingController,
                 validator: (String value) {
                   if (value.isEmpty) {
                     return 'State cannot be empty';
@@ -114,6 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               SizedBox(height: 10.0),
               TextFormField(
+                controller: _aPincodeTextEditingController,
                 keyboardType: TextInputType.number,
                 validator: (String value) {
                   if (value.isEmpty) {
@@ -130,36 +145,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               SizedBox(height: 10.0),
-              
             ],
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _formKey.currentState.validate();
+          //
+          saveUserInfoToFireStore(userid);
         },
         child: Icon(Icons.done),
       ),
     );
   }
-  // Future saveUserInfoToFireStore(FirebaseUser fUser) async {
-  //   Firestore.instance.collection("users").document(fUser.uid).setData({
-  //     "uid": fUser.uid,
-  //     "email": fUser.email,
-  //     "name": _nameTextEditingController.text.trim(),
-  //     "url": userImageUrl,
-  //     EcommerceApp.userCartList: ["garbageValue"]
-  //   });
 
-  //   await EcommerceApp.sharedPreferences.setString("uid", fUser.uid);
-  //   await EcommerceApp.sharedPreferences
-  //       .setString(EcommerceApp.userEmail, fUser.email);
-  //   await EcommerceApp.sharedPreferences
-  //       .setString(EcommerceApp.userName, _nameTextEditingController.text);
-  //   await EcommerceApp.sharedPreferences
-  //       .setString(EcommerceApp.userAvatarUrl, userImageUrl);
-  //   await EcommerceApp.sharedPreferences
-  //       .setStringList(EcommerceApp.userCartList, ["garbageValue"]);
-  // }
+  Future saveUserInfoToFireStore(String uid) async {
+    print(uid);
+    print('update address presses');
+    // Firestore.instance.collection("users").document(uid).collection('address').document().setData({
+    //   // "aName": _aNameTextEditingController.text.trim(),
+    //   // "aMobile": _aMobileTextEditingController.text.trim(),
+    //   // "aAddress": _aAddressTextEditingController.text.trim(),
+    //   // "aCity": _aCityTextEditingController.text.trim(),
+
+    //   // "aState": _aStateTextEditingController.text.trim(),
+    //   "aPincode": _aPincodeTextEditingController.text.trim(),
+
+    // });
+    Firestore.instance.collection("users").document(uid)
+        .collection('address')
+        .document()
+        .updateData({'aPincode': _aPincodeTextEditingController.text.trim()});
+
+    // await EcommerceApp.sharedPreferences.setString("uid", fUser.uid);
+    // await EcommerceApp.sharedPreferences
+    //     .setString(EcommerceApp.userEmail, fUser.email);
+    // await EcommerceApp.sharedPreferences
+    //     .setString(EcommerceApp.userName, _nameTextEditingController.text);
+    // await EcommerceApp.sharedPreferences
+    //     .setString(EcommerceApp.userAvatarUrl, userImageUrl);
+    // await EcommerceApp.sharedPreferences
+    //     .setStringList(EcommerceApp.userCartList, ["garbageValue"]);
+  }
 }
